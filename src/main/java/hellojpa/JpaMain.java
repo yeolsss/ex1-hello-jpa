@@ -16,12 +16,14 @@ public class JpaMain {
 
         try {
 
-            //영속 엔티티 조회
-            Member memberA = em.find(Member.class, 101L);
+            //영속 엔티티 생성
+            Member member = new Member(200L, "member200");
+            em.persist(member);
 
-            // 영속 엔티티 삭제
-            em.remove(memberA);
-
+            //flush 강제 호출
+            em.flush();
+            System.out.println("-------------------");
+            //commit은 flush를 기본적으로 호출 하고 commit을 실행함
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
