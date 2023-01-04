@@ -15,13 +15,16 @@ public class JpaMain {
         tx.begin();
 
         try {
-            //DB에서 조회
-            Member findMember1 = em.find(Member.class, 101L);
-            //1차 캐시에서 조회
-            Member findMember2 = em.find(Member.class, 101L);
 
-            //동일성 비교 true
-            System.out.println("result = " + (findMember1 == findMember2));
+            //영속
+            Member member1 = new Member(150L, "A");
+            Member member2 = new Member(160L, "B");
+
+            // 여기까지 Insert sql을 데이터베이스에 보내지 않음.
+            // 1차 캐쉬에 저장하고, 쓰기 지연 SQL저장소에 Insert sql을 저장해둔다.
+            em.persist(member1);
+            em.persist(member2);
+            System.out.println("---------------------------");
 
             tx.commit();
         } catch (Exception e) {
