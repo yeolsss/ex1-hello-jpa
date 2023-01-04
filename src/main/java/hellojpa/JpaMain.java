@@ -13,14 +13,14 @@ public class JpaMain {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
- 
+
         try {
 
             //영속 엔티티 조회
             Member memberA = em.find(Member.class, 101L);
 
-            // 영속 엔티티 데이터 수정
-            memberA.setName("hi");
+            // 영속 엔티티 삭제
+            em.remove(memberA);
 
             tx.commit();
         } catch (Exception e) {
