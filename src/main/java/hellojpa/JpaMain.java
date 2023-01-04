@@ -20,6 +20,9 @@ public class JpaMain {
             //1차 캐시에서 조회
             Member findMember2 = em.find(Member.class, 101L);
 
+            //동일성 비교 true
+            System.out.println("result = " + (findMember1 == findMember2));
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
