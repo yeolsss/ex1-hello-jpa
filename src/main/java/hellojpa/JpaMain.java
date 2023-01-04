@@ -16,14 +16,19 @@ public class JpaMain {
 
         try {
 
-            //영속 엔티티 생성
-            Member member = new Member(200L, "member200");
-            em.persist(member);
+            //영속 엔티티 조회
+            Member memberA = em.find(Member.class, 150L);
+            memberA.setName("AAA");
 
-            //flush 강제 호출
-            em.flush();
-            System.out.println("-------------------");
-            //commit은 flush를 기본적으로 호출 하고 commit을 실행함
+            //준영속 엔티티 전환
+            //detach: 단일 객체만 준영속으로 전환
+            em.detach(memberA);
+            //EntityManager를 통째로 준영속으로 전환
+            //즉, 1차캐시를 다 지운다.
+            em.clear();
+            //영속성 컨텍스트를 닫는다.
+            em.close();
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
