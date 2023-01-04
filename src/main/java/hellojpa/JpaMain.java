@@ -13,18 +13,14 @@ public class JpaMain {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-
+ 
         try {
 
-            //영속
-            Member member1 = new Member(150L, "A");
-            Member member2 = new Member(160L, "B");
+            //영속 엔티티 조회
+            Member memberA = em.find(Member.class, 101L);
 
-            // 여기까지 Insert sql을 데이터베이스에 보내지 않음.
-            // 1차 캐쉬에 저장하고, 쓰기 지연 SQL저장소에 Insert sql을 저장해둔다.
-            em.persist(member1);
-            em.persist(member2);
-            System.out.println("---------------------------");
+            // 영속 엔티티 데이터 수정
+            memberA.setName("hi");
 
             tx.commit();
         } catch (Exception e) {
